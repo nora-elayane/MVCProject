@@ -33,6 +33,10 @@ class AutoController{
         $utl = new Utilisateur($db) ;
         $log = $utl->login($_POST["email"]) ;
         if($log && password_verify($_POST["pass"] , $log["motdepasse"] )){
+            session_start() ; 
+            $_SESSION["user_id"] = $log["id_user"];
+            $_SESSION["user_nom"] = $log["nom_complet"] ; 
+            $_SESSION["user_email"] = $log["email"] ; 
             header("Location:index.php?action=dashboard") ;
             exit() ;
         }else{
@@ -40,6 +44,13 @@ class AutoController{
             exit();
         }
     }
+    }
+    public function logout(){
+        session_start() ; 
+        session_unset() ;
+        session_destroy() ; 
+        header("Location:index.php?action=login&success=Deconnecté avec succès");
+        exit() ;
     }
 }
 
