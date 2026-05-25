@@ -1,17 +1,9 @@
 <?php
 require_once "app/controllers/AuthController.php";
-// require_once "config/database.php" ;
-// require_once "app/models/Utilisateur.php" ;
-// $db = (new DataBase())->getConnection() ; 
-// $utl = new Utilisateur($db) ; 
-// $utl->createUser("Nora" , "nora@gmail.com" , "123456");
-if(isset($_GET["action"])){
-    $action = $_GET["action"] ; 
-}else{
-    $action = "login" ; 
-}
+
+$action = isset($_GET["action"]) ? $_GET["action"] :'login' ;
+$uth = new AutoController();
 if($action == "login"){
-    $uth = new AutoController();
     if($_SERVER["REQUEST_METHOD"] === "POST"){
         $uth->login(); 
     }else{
@@ -19,6 +11,10 @@ if($action == "login"){
     }
 }elseif ($action == "dashboard") {
     echo "hello u diiid iit" ; 
+}elseif($action === "register"){
+    $uth->register() ; 
+}elseif($action === "showRegister"){
+    $uth->showRegisterForm() ;
 }
 
 ?>
